@@ -60,3 +60,9 @@ A IA acelera o trabalho, mas não substitui as práticas de engenharia. Desde o 
 - Em inglês, no padrão Conventional Commits (`feat`, `fix`, `docs`, `chore`, `refactor`, `test`...)
 - Objetivos e curtos, como um desenvolvedor humano escreveria
 - Sem `@author` e sem corpo/description, apenas a linha de assunto
+
+### Branches e fluxo
+
+- Nomes de branch no padrão `tipo/nome-curto` (`feat/ingestion`, `fix/cpf-validation`, `docs/mvp-spec`...), com os mesmos tipos dos commits
+- Por enquanto, sem Pull Requests: commits e push direto na `main`, para ganhar velocidade
+- Mesmo sem PR, a revisão do diff antes do commit continua obrigatória
