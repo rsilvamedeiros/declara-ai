@@ -36,6 +36,14 @@ Atores: visitante, usuário logado, equipe interna (curadoria de regras, suporte
 
 Regra de dependência: o **módulo de regras fiscais e o de cálculo/validação não dependem** de IA, de armazenamento nem de interface. Eles são funções puras testáveis.
 
+## Serviços e stack (ver ADRs 0001, 0002, 0003, 0009)
+
+- **Nuxt** (Vue/TypeScript, Tailwind + shadcn-vue): área pública e área logada.
+- **API NestJS**: produto, contas, documentos, orquestração. Única porta de entrada para o front.
+- **Serviço fiscal e de extração (Python/FastAPI)**: fonte única da regra fiscal, validações, simulação e robôs. Interno.
+- **Workers Python** com fila para o processamento de documentos.
+- Observabilidade: OpenTelemetry + Grafana/Loki/Prometheus (ADR-0011).
+
 ## Fluxo de um documento
 
 1. Upload autenticado, com verificação de tipo, tamanho e malware.

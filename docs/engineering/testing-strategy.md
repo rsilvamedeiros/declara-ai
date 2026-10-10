@@ -2,6 +2,8 @@
 
 Status: rascunho
 
+Ferramentas: Cypress (E2E e componentes), Vitest (TypeScript), pytest + Hypothesis (Python), testes de contrato sobre OpenAPI. Ver ADR-0010.
+
 ## Pirâmide
 
 | Nível | Foco | Observação |

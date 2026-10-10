@@ -1,18 +1,20 @@
-# ADR-0003: Frontend
+# ADR-0003: Frontend: Nuxt
 
-- Status: proposta
+- Status: aceita (por decisão do produto)
 - Data: 2026-10-10
 
 ## Contexto
-Área pública com conteúdo educativo (SEO importa) e área logada com fluxos ricos (upload, revisão de campos, alertas). Responsivo e acessível.
+Área pública com conteúdo educativo (SEO importa) e área logada com fluxos ricos (upload, revisão de campos, alertas). Responsivo e acessível. Preferência do produto: Nuxt.
 
-## Opções
-1. **React com framework full-stack (ex.: Next.js) em TypeScript**: SSR/SSG para a área pública, SPA na área logada. Prós: SEO, ecossistema, acessibilidade madura. Contras: complexidade do framework.
-2. **SPA pura**. Contras: SEO e desempenho inicial pior na área pública.
-3. **Renderização no servidor com HTMX/templates**. Prós: simples, menos JS. Contras: fluxos de revisão de documento ficam mais difíceis.
+## Decisão
+**Nuxt (Vue 3, TypeScript)**:
 
-## Decisão (proposta)
-Opção 1, usando o framework apenas como camada de apresentação: nenhuma regra fiscal no front. Cálculos vêm da API. Contratos da API tipados e gerados de especificação OpenAPI.
+- Renderização no servidor / geração estática na área pública (SEO e desempenho), SPA na área logada.
+- Conteúdo educativo em Markdown versionado (Nuxt Content), com fonte oficial e ano em cada regra.
+- Nenhuma regra fiscal no front: cálculos e validações vêm da API.
+- Cliente da API tipado e gerado a partir do OpenAPI do NestJS.
+
+Observação: Nuxt é o equivalente em Vue do que o Next.js é em React; são frameworks distintos com propostas parecidas.
 
 ## Consequências
-Duas linguagens (TS no front, Python no back) com contrato explícito. Conteúdo público indexável.
+Boa experiência de SEO e conteúdo. Ecossistema Vue; a equipe precisa dominar Vue. Ver ADR-0009 para a camada de UI.
