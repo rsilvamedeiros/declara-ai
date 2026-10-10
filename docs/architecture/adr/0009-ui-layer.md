@@ -4,7 +4,7 @@
 - Data: 2026-10-10
 
 ## Contexto
-Preferência do produto: Tailwind CSS com shadcn. O shadcn original é para React; para Nuxt/Vue existe a porta comunitária **shadcn-vue**, baseada em Reka UI (antes Radix Vue).
+Preferência do produto, confirmada: Tailwind CSS com **shadcn-vue** (Nuxt.js). O shadcn original é para React; para Nuxt/Vue usa-se a porta comunitária shadcn-vue, baseada em Reka UI (antes Radix Vue).
 
 ## Decisão
 Tailwind CSS + **shadcn-vue** (componentes copiados para o repositório, não dependência fechada), com tokens de design em variáveis CSS e tema claro/escuro. Acessibilidade conforme WCAG como requisito dos componentes (RNF-041).

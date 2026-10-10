@@ -7,7 +7,7 @@
 Área pública com conteúdo educativo (SEO importa) e área logada com fluxos ricos (upload, revisão de campos, alertas). Responsivo e acessível. Preferência do produto: Nuxt.
 
 ## Decisão
-**Nuxt (Vue 3, TypeScript)**:
+**Nuxt.js (Vue 3, TypeScript)**:
 
 - Renderização no servidor / geração estática na área pública (SEO e desempenho), SPA na área logada.
 - Conteúdo educativo em Markdown versionado (Nuxt Content), com fonte oficial e ano em cada regra.
