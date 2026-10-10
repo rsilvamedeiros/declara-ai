@@ -1,5 +1,18 @@
 {
   "name": "declara-ai",
   "private": true,
-  "workspaces": ["apps/*", "packages/*", "e2e"]
+  "packageManager": "pnpm@10.28.0",
+  "scripts": {
+    "test": "pnpm -r --if-present test",
+    "typecheck": "pnpm -r --if-present typecheck"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "@swc/core",
+      "esbuild"
+    ]
+  },
+  "devDependencies": {
+    "typescript": "^7.0.2"
+  }
 }
