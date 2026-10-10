@@ -35,3 +35,28 @@ Troca de modelo, prompt ou robô exige rodar a avaliação e comparar com a linh
 ## Meta de cobertura
 
 TODO(pergunta): metas por módulo. Proposta: núcleo fiscal com cobertura de ramos muito alta e mutation testing; demais módulos com cobertura razoável focada em comportamento.
+
+## Como rodar
+
+Na raiz do repositório:
+
+```
+pnpm install
+pnpm typecheck && pnpm test          # tax-core e API (Vitest)
+```
+
+Robôs Python (`workers/extraction`):
+
+```
+pip install pytest hypothesis ruff mypy
+ruff check . && ruff format --check . && mypy src && pytest
+```
+
+CI (`.github/workflows/ci.yml`) roda os dois conjuntos a cada push na `main`.
+
+## Convenções
+
+- Arquivos de teste TypeScript: `*.test.ts` (núcleo) e `*.spec.ts` (módulos Nest) ao lado do código.
+- Python: `tests/test_*.py`.
+- Cada teste cita o critério de aceite da especificação quando existir.
+- Ciclo: ver o teste falhar (vermelho), implementar o mínimo (verde), refatorar.

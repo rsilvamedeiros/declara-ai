@@ -1,6 +1,6 @@
 # SPEC-0001: Identificadores fiscais e valores monetários
 
-- Status: rascunho (execução iniciada por instrução do produto; revisar)
+- Status: implementada (execução iniciada por instrução do produto; revisar)
 - Requisitos: RF-041, RNF-020, RNF-021; validações V-001 e V-002 de `docs/domain/validations-catalog.md`
 - Fase do roadmap: 1 (MVP), fatia inicial
 
@@ -32,14 +32,14 @@ Toda a validação fiscal depende de duas bases: reconhecer CPF/CNPJ válidos e 
 - O robô **não valida CPF/CNPJ nem decide valores fiscais**: só normaliza.
 
 ## Critérios de aceite
-- [ ] CA-1: CPF válido com e sem máscara é aceito; normalizado contém só 11 dígitos.
-- [ ] CA-2: CPF com tamanho errado, caracteres inválidos, dígitos repetidos ou dígito verificador errado é rejeitado com o `reason` correto.
-- [ ] CA-3: o mesmo para CNPJ (14 dígitos numéricos).
-- [ ] CA-4: `Money` soma e subtrai exatamente (ex.: `0.10 + 0.20 = 0.30`) e rejeita formato inválido ou mais de duas casas.
-- [ ] CA-5: propriedade: para qualquer par de valores, `(a + b) - b` é igual a `a`.
-- [ ] CA-6: endpoint `POST /validation/tax-id` cumpre o comportamento acima, incluindo `400`.
-- [ ] CA-7: `normalize_digits` e `normalize_amount_br` cumprem os casos acima, inclusive os de erro.
-- [ ] CA-8: propriedade (Python): para qualquer `Decimal` com duas casas, formatar em padrão brasileiro e normalizar devolve o mesmo valor.
+- [x] CA-1: CPF válido com e sem máscara é aceito; normalizado contém só 11 dígitos.
+- [x] CA-2: CPF com tamanho errado, caracteres inválidos, dígitos repetidos ou dígito verificador errado é rejeitado com o `reason` correto.
+- [x] CA-3: o mesmo para CNPJ (14 dígitos numéricos).
+- [x] CA-4: `Money` soma e subtrai exatamente (ex.: `0.10 + 0.20 = 0.30`) e rejeita formato inválido ou mais de duas casas.
+- [x] CA-5: propriedade: para qualquer par de valores, `(a + b) - b` é igual a `a`.
+- [x] CA-6: endpoint `POST /validation/tax-id` cumpre o comportamento acima, incluindo `400`.
+- [x] CA-7: `normalize_digits` e `normalize_amount_br` cumprem os casos acima, inclusive os de erro.
+- [x] CA-8: propriedade (Python): para qualquer `Decimal` com duas casas, formatar em padrão brasileiro e normalizar devolve o mesmo valor.
 - [ ] CA-9: CI roda os três conjuntos de testes e bloqueia o merge se algum falhar.
 
 ## Regras fiscais envolvidas
@@ -59,5 +59,6 @@ Nenhuma regra de imposto. O algoritmo de dígito verificador de CPF/CNPJ é púb
 - pytest + Hypothesis: unidade e propriedade no robô.
 
 ## Riscos e perguntas abertas
-- Vitest com decorators do Nest exige plugin SWC; se houver atrito, usar Jest no Nest (ADR-0010).
+- Vitest com decorators do Nest exige plugin SWC (`unplugin-swc`). Funcionou nesta fatia; manter Jest como plano B (ADR-0010).
+- `tax-core` é consumido como código-fonte TypeScript pelo workspace. TODO: definir etapa de build antes de empacotar a API para produção.
 - TODO(pergunta): "1.234" deve ser sempre ambíguo? Proposta: sim, por segurança.
