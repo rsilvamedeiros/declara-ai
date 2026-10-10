@@ -7,7 +7,7 @@
 Extração é lenta e variável; pico sazonal; documentos são entrada não confiável e devem ser processados isolados.
 
 ## Opções
-1. **Fila de tarefas com workers Python em contêineres isolados**. Prós: escala horizontal, isolamento, reprocessamento. Contras: infraestrutura de fila.
+1. **Fila de tarefas com workers Python (robôs de automação) em contêineres isolados, com mensagens em JSON Schema versionado**. Prós: escala horizontal, isolamento, reprocessamento. Contras: infraestrutura de fila.
 2. **Processamento síncrono na requisição**. Contras: timeouts, sem reprocessamento.
 
 ## Decisão (proposta)

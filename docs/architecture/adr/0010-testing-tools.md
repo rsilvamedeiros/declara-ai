@@ -11,8 +11,10 @@ Preferência do produto: Cypress e mais uma ferramenta à escolha. O projeto tem
 |---|---|
 | E2E e testes de componente do front | **Cypress** |
 | Unitários e integração em TypeScript (Nuxt e NestJS) | **Vitest** (escolha da engenharia: rápido, TypeScript nativo, mesma ferramenta nos dois projetos) |
-| Unitários, propriedades e integração em Python | **pytest** com Hypothesis (propriedades) |
-| Contrato Nest x serviço Python | Testes de contrato sobre o OpenAPI (ex.: Schemathesis) |
+| Robôs Python (extração, parsers) | **pytest** com Hypothesis (propriedades) |
+| Núcleo fiscal (Nest) | Vitest, com testes baseados em propriedades (fast-check) e casos da fonte oficial |
+| Contrato Nest x robôs Python | JSON Schema das mensagens de tarefa e resultado, validado nos dois lados |
+| Contrato Nest x Nuxt | OpenAPI do Nest, cliente tipado gerado |
 | Acessibilidade | axe integrado ao Cypress |
 
 Todos rodam em CI; TDD conforme `docs/engineering/process.md`.

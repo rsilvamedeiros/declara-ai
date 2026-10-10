@@ -1,30 +1,32 @@
-# ADR-0002: Backend: NestJS e Python
+# ADR-0002: Backend: NestJS como núcleo, Python como complemento
 
-- Status: aceita (stack, por decisão do produto); fronteira entre os dois: proposta
+- Status: aceita (por decisão do produto)
 - Data: 2026-10-10
 
 ## Contexto
-Decisão do produto: backend com Python e Node/NestJS. O requisito pede robôs locais em Python para extração e validação. Duas linguagens no backend elevam o risco de a mesma regra fiscal existir em dois lugares e divergir.
+Decisão do produto: unificar o backend em NestJS, com as regras fiscais nele, e usar Python como complemento voltado a automação. O requisito de robôs locais de extração continua valendo e é onde o ecossistema Python (OCR, PDF, visão computacional) mais ajuda.
 
 ## Decisão
-Divisão por responsabilidade, com **fonte única da regra fiscal em Python**:
-
-| Serviço | Linguagem | Responsabilidade |
+| Componente | Linguagem | Responsabilidade |
 |---|---|---|
-| API principal | NestJS (TypeScript) | Contas e pessoas, autenticação/autorização, orquestração de documentos, API consumida pelo Nuxt, auditoria, conteúdo, integração com o gateway de IA |
-| Serviço fiscal e de extração | Python (FastAPI, uso interno) | Catálogo de regras, validações, simulação, cálculo, robôs de OCR/parsers, pipeline de extração |
+| Backend principal | NestJS (TypeScript) | Contas e pessoas, autenticação/autorização, **catálogo de regras fiscais, validações, simulação e cálculo**, orquestração de documentos, API do Nuxt, auditoria, gateway de IA |
+| Robôs de automação | Python | OCR, leitura de PDF, parsers por emissor, normalização de campos, pré-processamento de imagem, avaliação de extração |
 
 Regras de fronteira:
 
-1. Constantes e lógica fiscal existem **somente** no serviço Python. NestJS e Nuxt nunca calculam imposto nem validam limites; chamam o serviço.
-2. O serviço Python é interno (não exposto à internet), acessado apenas pela API NestJS e pelos workers.
-3. Contrato entre os dois definido por OpenAPI, com testes de contrato em CI nos dois lados.
-4. Validações de formato genéricas no Nest (ex.: campos obrigatórios) são permitidas; validações fiscais (CPF/CNPJ no contexto fiscal, limites, alertas) vêm do serviço Python.
-5. Workers de processamento são Python.
+1. **Fonte única da regra fiscal: NestJS.** Nenhuma constante ou lógica fiscal em Python, no Nuxt ou em scripts.
+2. Python **extrai e normaliza; não decide**. Devolve campos com valor, página, trecho e confiança. Validações fiscais, limites e alertas rodam no Nest sobre o que o robô devolveu.
+3. Comunicação por **fila de tarefas** com mensagens em JSON Schema versionado (tarefa e resultado), sem API HTTP síncrona exposta. Python não acessa o banco de dados principal; lê o documento por URL assinada de curta duração e devolve o resultado pela fila.
+4. Robôs rodam em contêineres isolados, sem acesso a segredos além do necessário e com rede restrita.
+5. Cada resultado registra a versão do robô, permitindo reprocessar.
+6. Se um dia houver necessidade de endpoint Python (ex.: avaliação), será interno e documentado em novo ADR.
 
 ## Consequências
-Cada linguagem faz o que faz melhor (Nest: produto e API; Python: núcleo fiscal e documentos). Custo: duas toolchains, um contrato interno a manter e uma chamada de rede a mais. Risco mitigado por contrato testado e por teste de arquitetura que impede constantes fiscais fora do serviço Python.
+- Um só lugar para regra fiscal, validação e simulação, na linguagem do backend principal e do frontend (TypeScript permite compartilhar tipos e contratos com o Nuxt).
+- Python isolado em um papel estreito e substituível; falha ou troca de robô não afeta a regra fiscal.
+- Custo: duas toolchains, mas com contrato pequeno (mensagens de fila).
+- Risco: perder ferramentas numéricas do Python não é problema aqui, pois o cálculo fiscal é aritmética simples; atenção a precisão decimal no TypeScript (usar tipo decimal, nunca ponto flutuante para dinheiro).
 
 ## Alternativas descartadas
-- Python em tudo: recomendação inicial, preterida pela preferência do produto por NestJS.
-- Núcleo fiscal duplicado em TS: descartado pelo risco de divergência.
+- Núcleo fiscal em Python (proposta anterior): descartada pela decisão de unificar no Nest.
+- Python em tudo: descartada pela preferência do produto.

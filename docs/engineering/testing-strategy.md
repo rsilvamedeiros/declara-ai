@@ -2,7 +2,7 @@
 
 Status: rascunho
 
-Ferramentas: Cypress (E2E e componentes), Vitest (TypeScript), pytest + Hypothesis (Python), testes de contrato sobre OpenAPI. Ver ADR-0010.
+Ferramentas: Cypress (E2E e componentes), Vitest (TypeScript), fast-check (propriedades no núcleo fiscal), pytest + Hypothesis (robôs Python), contratos por OpenAPI e JSON Schema. Ver ADR-0010.
 
 ## Pirâmide
 
