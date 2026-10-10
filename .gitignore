@@ -11,3 +11,8 @@ __pycache__/
 *.pyc
 .DS_Store
 *.log
+__pycache__/
+.pytest_cache/
+.hypothesis/
+.ruff_cache/
+.mypy_cache/
