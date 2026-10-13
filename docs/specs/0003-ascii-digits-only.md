@@ -1,6 +1,6 @@
 # SPEC-0003: Apenas dígitos ASCII na normalização do robô
 
-- Status: rascunho
+- Status: implementada
 - Requisitos: RF-041, RNF-020; validações V-001 e V-002 de `docs/domain/validations-catalog.md`
 - Fase do roadmap: 1 (MVP), correção sobre a SPEC-0001
 
@@ -22,11 +22,11 @@ Isso deixa passar para a validação (e para valores fiscais) texto que não é 
 - Os demais comportamentos da SPEC-0001 não mudam.
 
 ## Critérios de aceite
-- [ ] CA-1: `normalize_digits("²")` e `normalize_digits("١٢٣")` devolvem `""`.
-- [ ] CA-2: `normalize_digits("529.982.247-25")` continua devolvendo `"52998224725"`.
-- [ ] CA-3: `normalize_amount_br("１２,３４")` e `normalize_amount_br("١٢,٣٤")` levantam `InvalidAmountError`.
-- [ ] CA-4: os testes existentes de `normalize_amount_br` continuam passando.
-- [ ] CA-5: o teste `xfail` de `test_normalize_digits_rejects_non_ascii_digits` passa a ser um teste normal (sem `xfail`).
+- [x] CA-1: `normalize_digits("²")` e `normalize_digits("١٢٣")` devolvem `""`.
+- [x] CA-2: `normalize_digits("529.982.247-25")` continua devolvendo `"52998224725"`.
+- [x] CA-3: `normalize_amount_br("１２,３４")` e `normalize_amount_br("١٢,٣٤")` levantam `InvalidAmountError`.
+- [x] CA-4: os testes existentes de `normalize_amount_br` continuam passando.
+- [x] CA-5: o teste `xfail` de `test_normalize_digits_rejects_non_ascii_digits` passa a ser um teste normal (sem `xfail`).
 
 ## Regras fiscais envolvidas
 Nenhuma regra de imposto.
