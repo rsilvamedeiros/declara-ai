@@ -1,20 +1,30 @@
 import { readFileSync, readdirSync } from 'node:fs'
-import { join } from 'node:path'
+import { join, relative, resolve } from 'node:path'
 import { describe, expect, it } from 'vitest'
 
 const dir = import.meta.dirname
-const sources = readdirSync(dir).filter((f) => f.endsWith('.ts') && !f.endsWith('.spec.ts') && !f.endsWith('.contract.ts'))
 
-describe('fronteira do módulo tax-data (CA-7)', () => {
-  it('importa só de pacotes permitidos e de arquivos do próprio módulo', () => {
-    const allowed = ['@declara/tax-core', '@nestjs/common']
-    for (const file of sources) {
-      const text = readFileSync(join(dir, file), 'utf8')
+function sourcesIn(folder: string): string[] {
+  return readdirSync(folder, { withFileTypes: true }).flatMap((entry) => {
+    const path = join(folder, entry.name)
+    if (entry.isDirectory()) return sourcesIn(path)
+    const isSource = entry.name.endsWith('.ts') && !/\.(spec|contract)\.ts$/.test(entry.name)
+    return isSource ? [path] : []
+  })
+}
+
+describe('fronteira do módulo tax-data (CA-7 da SPEC-0007, CA-8 da SPEC-0008)', () => {
+  it('importa só de pacotes permitidos, do módulo identity (interface pública) e de arquivos do próprio módulo', () => {
+    const allowed = ['@declara/tax-core', '@nestjs/common', 'pg', 'node:fs', 'node:path']
+    const identity = resolve(dir, '../identity')
+    for (const file of sourcesIn(dir)) {
+      const text = readFileSync(file, 'utf8')
       for (const m of text.matchAll(/from\s+['"]([^'"]+)['"]/g)) {
         const spec = m[1] as string
-        const ok =
-          allowed.includes(spec) || spec === '../identity' || (spec.startsWith('./') && !spec.includes('..'))
-        expect(ok, `${file} importa ${spec}`).toBe(true)
+        const target = spec.startsWith('.') ? resolve(file, '..', spec) : undefined
+        const inside = target !== undefined && !relative(dir, target).startsWith('..')
+        const ok = allowed.includes(spec) || target === identity || inside
+        expect(ok, `${relative(dir, file)} importa ${spec}`).toBe(true)
       }
     }
   })

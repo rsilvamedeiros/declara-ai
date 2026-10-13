@@ -1,6 +1,6 @@
 # SPEC-0009: Armazenamento dos dados fiscais em PostgreSQL
 
-- Status: aprovada
+- Status: implementada
 - Requisitos: RNF-001, RNF-002, RNF-004, RNF-007, RF-023, RF-030
 - Fase do roadmap: 1 (MVP), oitava fatia
 
@@ -32,14 +32,14 @@ Implementa `TaxDataRepository` (SPEC-0007): `add`, `get`, `list`, `replace`, com
 Arquivos SQL numerados e versionados em `apps/api`, aplicados em ordem por um executor mínimo, com registro das migrações aplicadas. Migração já publicada nunca é editada.
 
 ## Critérios de aceite
-- [ ] CA-1: o `PostgresTaxDataRepository` passa o teste de contrato `repositoryContract` sem alterações no contrato.
-- [ ] CA-2: dinheiro e texto fazem ida e volta sem perda (incluindo valores negativos e acima de 2^53 centavos).
-- [ ] CA-3: com a conexão da aplicação, uma consulta SQL direta sem `app.owner_id` não devolve linhas, e com o dono A não devolve linhas do dono B (RLS testada no banco, independente do filtro do adaptador).
-- [ ] CA-4: `INSERT` com `owner_id` diferente do `app.owner_id` é recusado pelo banco.
-- [ ] CA-5: as restrições `CHECK` recusam status inválido, ano inválido, valor duplo ou ausente e origem incoerente.
-- [ ] CA-6: as migrações aplicam do zero e em ordem, e reaplicar não duplica nada.
-- [ ] CA-7: erros do adaptador e logs não carregam valor, trecho nem CPF.
-- [ ] CA-8: o CI roda os testes de banco contra um PostgreSQL real (serviço do workflow), e os testes unitários sem banco continuam rodando sozinhos.
+- [x] CA-1: o `PostgresTaxDataRepository` passa o teste de contrato `repositoryContract` sem alterações no contrato.
+- [x] CA-2: dinheiro e texto fazem ida e volta sem perda (incluindo valores negativos e acima de 2^53 centavos).
+- [x] CA-3: com a conexão da aplicação, uma consulta SQL direta sem `app.owner_id` não devolve linhas, e com o dono A não devolve linhas do dono B (RLS testada no banco, independente do filtro do adaptador).
+- [x] CA-4: `INSERT` com `owner_id` diferente do `app.owner_id` é recusado pelo banco.
+- [x] CA-5: as restrições `CHECK` recusam status inválido, ano inválido, valor duplo ou ausente e origem incoerente.
+- [x] CA-6: as migrações aplicam do zero e em ordem, e reaplicar não duplica nada.
+- [x] CA-7: erros do adaptador e logs não carregam valor, trecho nem CPF.
+- [x] CA-8: o CI roda os testes de banco contra um PostgreSQL real (serviço do workflow), e os testes unitários sem banco continuam rodando sozinhos.
 
 ## Regras fiscais envolvidas
 Nenhuma.
