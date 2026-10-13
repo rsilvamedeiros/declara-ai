@@ -1,6 +1,6 @@
 # SPEC-0002: Dado fiscal rastreável
 
-- Status: rascunho
+- Status: aprovada
 - Requisitos: RF-022, RF-023, RF-030, RF-031, RF-032, RNF-021, RNF-022
 - Fase do roadmap: 1 (MVP), segunda fatia
 
@@ -65,7 +65,7 @@ Nenhuma. O modelo é neutro quanto a regras; `key` não carrega semântica fisca
 - Teste estático simples (CA-8): verificação das dependências do `package.json` do `tax-core`.
 
 ## Riscos e perguntas abertas
-- TODO(pergunta): `value` deve aceitar também data e booleano já nesta fatia, ou apenas `Money` e texto? Proposta: só `Money` e texto; ampliar quando uma ficha exigir.
-- TODO(pergunta): um campo `rejected` deve poder ser reaberto? Proposta: não; o usuário cria novo campo manual.
-- TODO(pergunta): deve haver `confidence` no `FieldValue` já agora (RF-022, V-012)? Proposta: adiar para a spec de extração, para não fixar semântica sem o extrator.
+- Decidido: `value` aceita apenas `Money` e texto nesta fatia; ampliar quando uma ficha exigir.
+- Decidido: um campo `rejected` não é reaberto; o usuário cria um novo campo manual.
+- Decidido: sem `confidence` no `FieldValue` agora (RF-022, V-012); entra na spec de extração.
 - Risco: modelar `key` livre pode permitir chaves inconsistentes; mitigado quando o catálogo de campos por ficha existir.
