@@ -1,6 +1,6 @@
 # SPEC-0007: Serviço de dados fiscais (casos de uso sobre o modelo rastreável)
 
-- Status: aprovada
+- Status: implementada
 - Requisitos: RF-023, RF-030, RF-031, RF-032, RNF-002, RNF-007, RNF-012, RNF-021
 - Fase do roadmap: 1 (MVP), sexta fatia
 
@@ -35,13 +35,13 @@ Pedir um `id` de outro dono é indistinguível de um `id` inexistente (resultado
 `not_found`, `invalid_transition` e `ambiguous_value`, todos sem dado pessoal na mensagem.
 
 ## Critérios de aceite
-- [ ] CA-1: `enterManualField` guarda um campo `confirmed` com origem manual e `listFields` o devolve para a mesma pessoa e ano, e só para eles.
-- [ ] CA-2: `confirm`, `correct` e `reject` aplicam a transição e persistem; transição inválida lança erro e deixa o armazenado intacto.
-- [ ] CA-3: um `ownerId` nunca lê, lista, altera nem detecta campos de outro dono (`not_found` para ids alheios).
-- [ ] CA-4: `usableValue` devolve só valor `confirmed`/`corrected` e propaga ambiguidade.
-- [ ] CA-5: `consistencyAlerts` devolve os alertas V-011 dos campos da pessoa e do ano, sem misturar donos.
-- [ ] CA-6: toda alteração emite exatamente um evento de auditoria sem valor, trecho nem CPF; leituras não emitem.
-- [ ] CA-7: o módulo só depende de `@declara/tax-core` e de `@nestjs/common` (injeção); não acessa o interior de outros módulos (README da API).
+- [x] CA-1: `enterManualField` guarda um campo `confirmed` com origem manual e `listFields` o devolve para a mesma pessoa e ano, e só para eles.
+- [x] CA-2: `confirm`, `correct` e `reject` aplicam a transição e persistem; transição inválida lança erro e deixa o armazenado intacto.
+- [x] CA-3: um `ownerId` nunca lê, lista, altera nem detecta campos de outro dono (`not_found` para ids alheios).
+- [x] CA-4: `usableValue` devolve só valor `confirmed`/`corrected` e propaga ambiguidade.
+- [x] CA-5: `consistencyAlerts` devolve os alertas V-011 dos campos da pessoa e do ano, sem misturar donos.
+- [x] CA-6: toda alteração emite exatamente um evento de auditoria sem valor, trecho nem CPF; leituras não emitem.
+- [x] CA-7: o módulo só depende de `@declara/tax-core` e de `@nestjs/common` (injeção); não acessa o interior de outros módulos (README da API).
 
 ## Regras fiscais envolvidas
 Nenhuma.
