@@ -2,6 +2,7 @@ import {
   type Alert,
   type FieldContent,
   type FieldValue,
+  Money,
   checkExtractedVsManual,
   confirmField,
   correctField,
@@ -11,7 +12,7 @@ import {
 } from '@declara/tax-core'
 import type { AuditAction, AuditSink, StoredField, TaxDataRepository } from './ports'
 
-export type TaxDataErrorCode = 'not_found'
+export type TaxDataErrorCode = 'not_found' | 'type_mismatch'
 
 /** Erro do serviço. A mensagem é só o código, nunca dado pessoal (RNF-012). */
 export class TaxDataError extends Error {
@@ -51,7 +52,12 @@ export class TaxDataService {
   }
 
   correct(ownerId: string, id: string, newValue: FieldContent): Promise<StoredField> {
-    return this.transition(ownerId, id, 'correct', (f) => correctField(f, newValue))
+    return this.transition(ownerId, id, 'correct', (f) => {
+      if (f.status === 'extracted' && newValue instanceof Money !== f.value instanceof Money) {
+        throw new TaxDataError('type_mismatch')
+      }
+      return correctField(f, newValue)
+    })
   }
 
   reject(ownerId: string, id: string): Promise<StoredField> {

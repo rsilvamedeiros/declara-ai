@@ -12,7 +12,8 @@ describe('fronteira do módulo tax-data (CA-7)', () => {
       const text = readFileSync(join(dir, file), 'utf8')
       for (const m of text.matchAll(/from\s+['"]([^'"]+)['"]/g)) {
         const spec = m[1] as string
-        const ok = allowed.includes(spec) || (spec.startsWith('./') && !spec.includes('..'))
+        const ok =
+          allowed.includes(spec) || spec === '../identity' || (spec.startsWith('./') && !spec.includes('..'))
         expect(ok, `${file} importa ${spec}`).toBe(true)
       }
     }

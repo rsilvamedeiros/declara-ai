@@ -58,6 +58,13 @@ describe('TaxDataService', () => {
     expect(sink.events).toHaveLength(1)
   })
 
+  it('correct rejeita valor de tipo diferente do campo e deixa o armazenado intacto', async () => {
+    const stored = await repo.add('A', extracted())
+    await expect(service.correct('A', stored.id, 'texto')).rejects.toMatchObject({ code: 'type_mismatch' })
+    expect((await repo.get('A', stored.id))?.field.status).toBe('extracted')
+    expect(sink.events).toEqual([])
+  })
+
   it('CA-3: id de outro dono é not_found em todas as operações', async () => {
     const stored = await repo.add('A', extracted())
     for (const op of [
