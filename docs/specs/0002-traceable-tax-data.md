@@ -1,6 +1,6 @@
 # SPEC-0002: Dado fiscal rastreável
 
-- Status: aprovada
+- Status: implementada
 - Requisitos: RF-022, RF-023, RF-030, RF-031, RF-032, RNF-021, RNF-022
 - Fase do roadmap: 1 (MVP), segunda fatia
 
@@ -36,14 +36,14 @@ Todo valor que entra na declaração precisa dizer de onde veio (documento, pág
 - Todo campo referencia pessoa e ano; dados de anos diferentes nunca se misturam em `valueFor`.
 
 ## Critérios de aceite
-- [ ] CA-1: `createExtractedField` aceita origem completa e rejeita ausência de `documentId`, `page` < 1 ou `excerpt` vazio.
-- [ ] CA-2: `createManualField` produz campo `confirmed` com origem `manual`.
-- [ ] CA-3: transições `extracted` → `confirmed` / `corrected` / `rejected` funcionam; qualquer transição a partir de outro estado é rejeitada.
-- [ ] CA-4: `correctField` guarda o valor anterior em `previousValue` e não altera a instância original.
-- [ ] CA-5: `usableFields` e `valueFor` nunca devolvem campo `extracted` ou `rejected`.
-- [ ] CA-6: `valueFor` não mistura pessoas nem anos e falha de forma explícita quando há dois campos utilizáveis para a mesma chave.
-- [ ] CA-7: propriedade: para qualquer sequência de operações válidas, o campo mantém origem e pessoa/ano inalterados.
-- [ ] CA-8: o pacote não importa nada de framework, rede ou sistema de arquivos (continua puro, ADR-0001).
+- [x] CA-1: `createExtractedField` aceita origem completa e rejeita ausência de `documentId`, `page` < 1 ou `excerpt` vazio.
+- [x] CA-2: `createManualField` produz campo `confirmed` com origem `manual`.
+- [x] CA-3: transições `extracted` → `confirmed` / `corrected` / `rejected` funcionam; qualquer transição a partir de outro estado é rejeitada.
+- [x] CA-4: `correctField` guarda o valor anterior em `previousValue` e não altera a instância original.
+- [x] CA-5: `usableFields` e `valueFor` nunca devolvem campo `extracted` ou `rejected`.
+- [x] CA-6: `valueFor` não mistura pessoas nem anos e falha de forma explícita quando há dois campos utilizáveis para a mesma chave.
+- [x] CA-7: propriedade: para qualquer sequência de operações válidas, o campo mantém origem e pessoa/ano inalterados.
+- [x] CA-8: o pacote não importa nada de framework, rede ou sistema de arquivos (continua puro, ADR-0001).
 
 ## Regras fiscais envolvidas
 Nenhuma. O modelo é neutro quanto a regras; `key` não carrega semântica fiscal nesta fatia.
