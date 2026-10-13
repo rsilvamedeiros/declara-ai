@@ -1,6 +1,6 @@
 # SPEC-0009: Armazenamento dos dados fiscais em PostgreSQL
 
-- Status: rascunho
+- Status: aprovada
 - Requisitos: RNF-001, RNF-002, RNF-004, RNF-007, RF-023, RF-030
 - Fase do roadmap: 1 (MVP), oitava fatia
 
@@ -61,7 +61,6 @@ Esquema acima; a porta `TaxDataRepository` não muda. A string de conexão vem d
 - Teste de arquitetura: o adaptador fica dentro do módulo `tax-data` e só depende do driver escolhido.
 
 ## Riscos e perguntas abertas
-- Proposta: driver `pg` com SQL escrito à mão e migrações em arquivos `.sql`, sem ORM nem ferramenta de migração externa (menos dependências, controle explícito da RLS). Alternativa: ORM ou query builder, mais conveniente, com mais superfície.
-- Proposta: no CI, PostgreSQL como serviço do workflow (`services: postgres`); localmente, o teste de banco é pulado quando `DATABASE_URL` não está definida, para `pnpm test` continuar rodando sem banco. Alternativa: containers de teste, com Docker obrigatório.
-- Proposta: `DELETE` fica fora desta fatia (a exclusão de dados do usuário, RF-013, vira spec própria, pois exige apagar tudo e a trilha).
-- Risco: `pg` e o executor de migrações são dependências novas em `apps/api`; a escolha precisa de sua aprovação (regra de dependências do projeto).
+- Decidido: driver `pg` com SQL escrito à mão e migrações em arquivos `.sql`, sem ORM nem ferramenta de migração externa. A dependência `pg` (e `@types/pg`) entra em `apps/api` com esta fatia.
+- Decidido: no CI, PostgreSQL como serviço do workflow (`services: postgres`); localmente, o teste de banco é pulado quando `DATABASE_URL` não está definida, para `pnpm test` continuar rodando sem banco.
+- Decidido: `DELETE` fica fora desta fatia (a exclusão de dados do usuário, RF-013, vira spec própria).
