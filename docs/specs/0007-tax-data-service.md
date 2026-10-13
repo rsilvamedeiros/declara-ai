@@ -1,6 +1,6 @@
 # SPEC-0007: Serviço de dados fiscais (casos de uso sobre o modelo rastreável)
 
-- Status: rascunho
+- Status: aprovada
 - Requisitos: RF-023, RF-030, RF-031, RF-032, RNF-002, RNF-007, RNF-012, RNF-021
 - Fase do roadmap: 1 (MVP), sexta fatia
 
@@ -61,7 +61,7 @@ Interfaces `TaxDataRepository` e `AuditSink` exportadas pelo módulo. Sem contra
 - Um teste de contrato reutilizável do `TaxDataRepository`, que o adaptador de banco futuro também deverá passar.
 
 ## Riscos e perguntas abertas
-- TODO(pergunta): o `id` do campo deve ser gerado pelo repositório (proposta, para o banco decidir) ou pelo serviço?
-- TODO(pergunta): `listFields` deve devolver também campos `rejected` (proposta: sim, a tela de revisão os mostra), ou escondê-los por padrão?
-- TODO(pergunta): vale já expor endpoints HTTP protegidos por um guard provisório? Proposta: não; endpoints só junto com a spec de identidade, para não criar rota sem autenticação real.
+- Decidido: o `id` do campo é gerado pelo repositório, para o banco decidir.
+- Decidido: `listFields` devolve também os campos `rejected`, para a tela de revisão.
+- Decidido: sem endpoints HTTP nesta fatia; eles entram junto com a spec de identidade.
 - Risco: o adaptador em memória não prova concorrência nem transações; o contrato de teste do repositório mitiga na troca pelo banco.
