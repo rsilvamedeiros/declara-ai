@@ -1,6 +1,6 @@
 # SPEC-0006: Alertas e validações de consistência (V-005 e V-011)
 
-- Status: rascunho
+- Status: aprovada
 - Requisitos: RF-041, RF-042, RNF-020, RNF-021, RNF-012; validações V-005 e V-011 de `docs/domain/validations-catalog.md`
 - Fase do roadmap: 1 (MVP), quinta fatia
 
@@ -51,6 +51,6 @@ Tipos exportados por `tax-core`. O contrato HTTP dos alertas entra em `packages/
 - fast-check: para qualquer lista de partes `Money`, `checkSumMatchesTotal` com total igual à soma nunca gera alerta; `checkExtractedVsManual` é invariante à ordem dos campos.
 
 ## Riscos e perguntas abertas
-- TODO(pergunta): V-005 deve aceitar tolerância de arredondamento (por exemplo 1 centavo por parte)? Proposta: não; comparação exata, e o usuário justifica quando o documento arredonda.
-- TODO(pergunta): `severity` e `suggestedAction` de V-005 e V-011 ficam como `warning` e `fix_value`/`justify`, conforme o catálogo ("Alerta")? Proposta: sim.
+- Decidido: V-005 compara em centavos, sem tolerância; quando o documento arredonda, o usuário justifica o alerta.
+- Decidido: V-005 e V-011 ficam como `warning` ("Alerta" do catálogo), com `fix_value` ou `justify` como ação sugerida.
 - Risco: sem identificador próprio, `FieldValue` é referenciado por chave, pessoa e ano; se a mesma chave tiver várias linhas legítimas (ex.: vários recibos), a spec do catálogo de campos por ficha precisa definir identidade.
