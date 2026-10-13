@@ -30,3 +30,18 @@ export type {
   UploadRejection,
   UploadValidation,
 } from './intake'
+export {
+  AlertError,
+  checkExtractedVsManual,
+  checkSumMatchesTotal,
+  justifyAlert,
+  resolveAlert,
+} from './alerts'
+export type {
+  Alert,
+  AlertErrorCode,
+  AlertSeverity,
+  AlertState,
+  FieldRef,
+  SuggestedAction,
+} from './alerts'
