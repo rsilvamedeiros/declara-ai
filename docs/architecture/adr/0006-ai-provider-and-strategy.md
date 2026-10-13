@@ -1,6 +1,6 @@
 # ADR-0006: Uso de IA e provedor
 
-- Status: proposta
+- Status: aceita (aprovada em bloco pelo dono do projeto, 2026-10-13)
 - Data: 2026-10-10
 
 ## Contexto
