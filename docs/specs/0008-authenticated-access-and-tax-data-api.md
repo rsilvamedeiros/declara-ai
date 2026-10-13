@@ -1,6 +1,6 @@
 # SPEC-0008: Acesso autenticado e API HTTP de dados fiscais
 
-- Status: rascunho
+- Status: aprovada
 - Requisitos: RF-004, RF-012, RNF-002, RNF-003, RNF-004, RNF-007, RNF-012
 - Fase do roadmap: 1 (MVP), sétima fatia
 
@@ -17,7 +17,7 @@ O serviço `tax-data` (SPEC-0007) recebe um `ownerId` já autenticado, mas nada 
 ## Comportamento
 
 ### Identidade (porta `TokenVerifier`)
-- Interface do módulo `identity`: `verify(bearerToken)` devolve `{ subject }` ou falha. O `subject` do provedor vira o `ownerId` (cada conta é um espaço isolado).
+- Interface do módulo `identity`: `verify(bearerToken)` devolve `{ ownerId }` ou falha. O adaptador resolve o `subject` do provedor para o `ownerId` interno por uma tabela de contas (cada conta é um espaço isolado).
 - Adaptador de teste com tokens fictícios; o adaptador OIDC real entra em spec própria.
 - Guard HTTP: exige `Authorization: Bearer <token>`; sem token, token inválido ou expirado resulta em `401`, com a mesma resposta e sem detalhe do motivo. O `ownerId` fica na requisição e é a única origem do dono: corpo, query e path nunca o definem.
 
@@ -60,7 +60,6 @@ Interface `TokenVerifier` e decorador/guard de autenticação exportados por `id
 - Teste de arquitetura de imports (CA-8), no mesmo estilo do módulo `tax-data`.
 
 ## Riscos e perguntas abertas
-- Proposta: o `subject` do provedor é usado diretamente como `ownerId`; assim a troca de provedor exige migração de ids. Alternativa: tabela própria de contas mapeando `subject` para `ownerId` (mais código agora, troca mais simples depois).
-- Proposta: `POST /fields/{id}/correct` recebe o novo valor com o mesmo tipo do campo; mudar de dinheiro para texto resulta em `400`.
-- Proposta: sem paginação nesta fatia (o volume por pessoa e ano é pequeno).
-- Risco: o `ownerId` ser o `subject` do provedor liga os dados ao provedor; a tabela de contas resolve isso, ao custo de uma peça a mais.
+- Decidido: tabela própria de contas mapeando o `subject` do provedor para o `ownerId`, para trocar de provedor sem migrar ids dos dados. A tabela entra com o adaptador de armazenamento; nesta fatia, a porta `TokenVerifier` já devolve o `ownerId` resolvido.
+- Decidido: `POST /fields/{id}/correct` exige o mesmo tipo do campo; mudar de dinheiro para texto (ou o inverso) resulta em `400`.
+- Decidido: sem paginação nesta fatia (volume pequeno por pessoa e ano).
