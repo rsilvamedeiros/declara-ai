@@ -25,7 +25,11 @@ def normalize_digits(text: str) -> str:
 
 def normalize_amount_br(text: str) -> Decimal:
     cleaned = text.replace("R$", "").strip()
-    if not cleaned or not _ALLOWED_CHARS.match(cleaned) or not any(c in _ASCII_DIGITS for c in cleaned):
+    if (
+        not cleaned
+        or not _ALLOWED_CHARS.match(cleaned)
+        or not any(c in _ASCII_DIGITS for c in cleaned)
+    ):
         raise InvalidAmountError(f"not an amount: {text!r}")
     if cleaned.count(",") > 1:
         raise InvalidAmountError(f"not an amount: {text!r}")
