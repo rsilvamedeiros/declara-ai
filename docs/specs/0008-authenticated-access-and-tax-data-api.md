@@ -1,6 +1,6 @@
 # SPEC-0008: Acesso autenticado e API HTTP de dados fiscais
 
-- Status: aprovada
+- Status: implementada
 - Requisitos: RF-004, RF-012, RNF-002, RNF-003, RNF-004, RNF-007, RNF-012
 - Fase do roadmap: 1 (MVP), sétima fatia
 
@@ -33,14 +33,14 @@ Todos exigem autenticação e usam o `ownerId` do guard:
 `not_found` vira `404` (inclusive id de outro dono), `invalid_transition` e `ambiguous_value` viram `409`, entrada inválida (ano, valor, corpo) vira `400`, sem token válido `401`. O corpo do erro traz só um código estável, sem valor, trecho ou CPF.
 
 ## Critérios de aceite
-- [ ] CA-1: requisição sem token, com token inválido ou expirado recebe `401` idêntico e não chega ao serviço.
-- [ ] CA-2: o `ownerId` vem só do token verificado; enviar `ownerId` no corpo, query ou path não muda o dono.
-- [ ] CA-3: um usuário recebe `404` ao confirmar, corrigir, rejeitar ou ler campo de outro, e a listagem dele não inclui campos alheios.
-- [ ] CA-4: cada endpoint aciona o caso de uso correspondente e devolve o campo com `id`, status e valor em string decimal.
-- [ ] CA-5: transição inválida e ambiguidade resultam em `409` sem alterar o armazenado.
-- [ ] CA-6: entrada malformada resulta em `400`; nenhuma resposta de erro nem log carrega valor, trecho ou CPF.
-- [ ] CA-7: o contrato OpenAPI descreve os endpoints e é validado contra as respostas nos testes.
-- [ ] CA-8: o módulo `identity` só depende de `@declara/tax-core` e `@nestjs/common`; `tax-data` usa `identity` só pela interface pública.
+- [x] CA-1: requisição sem token, com token inválido ou expirado recebe `401` idêntico e não chega ao serviço.
+- [x] CA-2: o `ownerId` vem só do token verificado; enviar `ownerId` no corpo, query ou path não muda o dono.
+- [x] CA-3: um usuário recebe `404` ao confirmar, corrigir, rejeitar ou ler campo de outro, e a listagem dele não inclui campos alheios.
+- [x] CA-4: cada endpoint aciona o caso de uso correspondente e devolve o campo com `id`, status e valor em string decimal.
+- [x] CA-5: transição inválida e ambiguidade resultam em `409` sem alterar o armazenado.
+- [x] CA-6: entrada malformada resulta em `400`; nenhuma resposta de erro nem log carrega valor, trecho ou CPF.
+- [x] CA-7: o contrato OpenAPI descreve os endpoints e é validado contra as respostas nos testes.
+- [x] CA-8: o módulo `identity` só depende de `@declara/tax-core` e `@nestjs/common`; `tax-data` usa `identity` só pela interface pública.
 
 ## Regras fiscais envolvidas
 Nenhuma.

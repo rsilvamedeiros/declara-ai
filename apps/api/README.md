@@ -26,4 +26,4 @@ NestJS (TypeScript). Backend principal. ADRs 0001 e 0002.
 3. Somente `ai-gateway` conversa com provedores de IA.
 4. Violações são checadas por teste de arquitetura em CI.
 
-Status: módulo `tax-data` implementado (SPEC-0007, sem HTTP nem banco); demais módulos aguardam SPEC aprovada.
+Status: módulos `tax-data` e `identity` implementados (SPEC-0007 e SPEC-0008, com HTTP e verificador de teste, sem banco nem provedor OIDC); demais módulos aguardam SPEC aprovada.
