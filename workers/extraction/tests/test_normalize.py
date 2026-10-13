@@ -67,17 +67,13 @@ def test_normalize_digits_ignores_whitespace_and_symbols():
     assert normalize_digits("../-") == ""
 
 
-@given(st.text(alphabet=st.characters(min_codepoint=32, max_codepoint=126)))
+@given(st.text())
 def test_normalize_digits_property_ascii_only_and_idempotent(text):
     result = normalize_digits(text)
     assert all(ch in "0123456789" for ch in result)
     assert normalize_digits(result) == result
 
 
-@pytest.mark.xfail(
-    strict=True,
-    reason="gap: str.isdigit() aceita dígitos não ASCII (ex.: '²', '١٢٣'); decidir em spec",
-)
 @pytest.mark.parametrize("text", ["²", "١٢٣"])
 def test_normalize_digits_rejects_non_ascii_digits(text):
     assert normalize_digits(text) == ""
@@ -119,3 +115,9 @@ def test_amount_errors_are_distinct_value_errors():
 
 def test_normalize_amount_br_keeps_two_decimal_places():
     assert str(normalize_amount_br("10,00")) == "10.00"
+
+
+@pytest.mark.parametrize("text", ["１２,３４", "١٢,٣٤", "1²,00"])
+def test_normalize_amount_br_rejects_non_ascii_digits(text):
+    with pytest.raises(InvalidAmountError):
+        normalize_amount_br(text)
