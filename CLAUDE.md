@@ -64,5 +64,9 @@ A IA acelera o trabalho, mas não substitui as práticas de engenharia. Desde o 
 ### Branches e fluxo
 
 - Nomes de branch no padrão `tipo/nome-curto` (`feat/ingestion`, `fix/cpf-validation`, `docs/mvp-spec`...), com os mesmos tipos dos commits
-- Por enquanto, sem Pull Requests: commits e push direto na `main`, para ganhar velocidade
-- Mesmo sem PR, a revisão do diff antes do commit continua obrigatória
+- Nada vai direto na `main`: cada mudança abre um Pull Request, que o dono do projeto revisa e aprova
+- PRs pequenos e focados, um assunto por PR, com o CI verde antes de pedir revisão
+- O PR segue o template em `.github/pull_request_template.md`
+- Mudança de regra fiscal, autenticação, armazenamento ou envio a IA precisa de atenção redobrada na revisão e cita a fonte oficial / a especificação
+- Quem abre o PR (inclusive a IA) acompanha CI e comentários e corrige até ficar mergeável; o merge é do dono do projeto
+- Commits seguem a seção acima: só assunto, sem trailers de autoria

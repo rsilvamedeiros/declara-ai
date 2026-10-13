@@ -19,14 +19,14 @@ Status: rascunho
 - Sem dado pessoal em log, teste ou repositório.
 - Documentação e ADR atualizados quando houver decisão nova.
 
-## Revisão sem PR
+## Revisão por Pull Request
 
-Sem Pull Requests por ora, mas a revisão continua obrigatória:
-
-- Antes do commit, ler o diff completo, inclusive o gerado por IA.
-- Checar: correção, testes, segurança/privacidade, fronteiras de módulo, simplicidade.
-- Mudanças de regra fiscal, autenticação, armazenamento ou envio a IA recebem revisão explícita adicional e registro na especificação.
-- Reavaliar este item quando houver mais de uma pessoa ou na Fase 2 do roadmap.
+- Toda mudança entra por PR a partir de uma branch `tipo/nome-curto`; push direto na `main` não é usado.
+- O autor revisa o próprio diff antes de abrir o PR, inclusive o gerado por IA.
+- O CI (formatação, lint, tipos, testes) precisa estar verde.
+- Revisão do dono do projeto antes do merge. Mudanças de regra fiscal, autenticação, armazenamento ou envio a IA recebem checagem explícita de fonte oficial, segurança e privacidade.
+- Um PR por assunto. Especificação (SDD) e implementação podem ir em PRs separados quando a especificação precisar de aprovação antes.
+- A IA pode revisar o PR como apoio, mas a aprovação é humana.
 
 ## Uso de IA no desenvolvimento
 
@@ -37,7 +37,7 @@ Sem Pull Requests por ora, mas a revisão continua obrigatória:
 
 ## Commits e branches
 
-Ver `CLAUDE.md`: Conventional Commits em inglês, só assunto; branches `tipo/nome-curto`; por ora push direto na `main`.
+Ver `CLAUDE.md`: Conventional Commits em inglês, só assunto; branches `tipo/nome-curto`; mudanças entram por Pull Request.
 
 ## Decisões técnicas
 
