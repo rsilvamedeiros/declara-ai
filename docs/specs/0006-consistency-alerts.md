@@ -1,6 +1,6 @@
 # SPEC-0006: Alertas e validações de consistência (V-005 e V-011)
 
-- Status: aprovada
+- Status: implementada
 - Requisitos: RF-041, RF-042, RNF-020, RNF-021, RNF-012; validações V-005 e V-011 de `docs/domain/validations-catalog.md`
 - Fase do roadmap: 1 (MVP), quinta fatia
 
@@ -28,13 +28,13 @@ O catálogo de validações define a estrutura de um alerta e várias validaçõ
 - Qualquer outra transição é rejeitada. Funções puras: devolvem nova instância.
 
 ## Critérios de aceite
-- [ ] CA-1: `checkSumMatchesTotal` não gera alerta quando a soma bate exatamente e gera `V-005` quando difere em um centavo.
-- [ ] CA-2: `checkSumMatchesTotal` ignora campos `extracted`/`rejected`, não gera alerta sem total utilizável e rejeita campos que não sejam `Money` ou de pessoa/ano diferentes.
-- [ ] CA-3: `checkExtractedVsManual` gera `V-011` quando manual e documento divergem, não gera quando coincidem e ignora campos `rejected`.
-- [ ] CA-4: três campos na mesma chave geram um único alerta; chaves, pessoas e anos diferentes nunca se misturam.
-- [ ] CA-5: transições `open` → `resolved` e `open` → `justified` funcionam; `justifyAlert` rejeita justificativa vazia; qualquer outra transição é rejeitada.
-- [ ] CA-6: alertas e erros não contêm valor monetário, trecho do documento nem justificativa (RNF-012).
-- [ ] CA-7: o pacote continua puro, sem dependência de runtime (ADR-0001).
+- [x] CA-1: `checkSumMatchesTotal` não gera alerta quando a soma bate exatamente e gera `V-005` quando difere em um centavo.
+- [x] CA-2: `checkSumMatchesTotal` ignora campos `extracted`/`rejected`, não gera alerta sem total utilizável e rejeita campos que não sejam `Money` ou de pessoa/ano diferentes.
+- [x] CA-3: `checkExtractedVsManual` gera `V-011` quando manual e documento divergem, não gera quando coincidem e ignora campos `rejected`.
+- [x] CA-4: três campos na mesma chave geram um único alerta; chaves, pessoas e anos diferentes nunca se misturam.
+- [x] CA-5: transições `open` → `resolved` e `open` → `justified` funcionam; `justifyAlert` rejeita justificativa vazia; qualquer outra transição é rejeitada.
+- [x] CA-6: alertas e erros não contêm valor monetário, trecho do documento nem justificativa (RNF-012).
+- [x] CA-7: o pacote continua puro, sem dependência de runtime (ADR-0001).
 
 ## Regras fiscais envolvidas
 Nenhuma. As validações são aritméticas e de consistência entre campos.
