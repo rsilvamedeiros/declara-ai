@@ -1,6 +1,6 @@
 # ADR-0008: Hospedagem e infraestrutura
 
-- Status: proposta
+- Status: aceita (aprovada em bloco, 2026-10-13); escolha do provedor de nuvem e orçamento seguem em aberto
 - Data: 2026-10-10
 
 ## Contexto

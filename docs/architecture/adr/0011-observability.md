@@ -1,6 +1,6 @@
 # ADR-0011: Logs e observabilidade open source
 
-- Status: proposta
+- Status: aceita (aprovada em bloco pelo dono do projeto, 2026-10-13)
 - Data: 2026-10-10
 
 ## Contexto

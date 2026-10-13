@@ -1,6 +1,6 @@
 # ADR-0005: Processamento assíncrono e robôs locais
 
-- Status: proposta
+- Status: aceita (aprovada em bloco pelo dono do projeto, 2026-10-13)
 - Data: 2026-10-10
 
 ## Contexto
@@ -12,6 +12,9 @@ Extração é lenta e variável; pico sazonal; documentos são entrada não conf
 
 ## Decisão (proposta)
 Opção 1. Pipeline por etapas idempotentes: validação do arquivo, OCR/parsers determinísticos, IA para o resíduo, normalização. Cada etapa registra versão do robô e do modelo usados, permitindo reprocessar. Workers sem acesso a segredos além do necessário e com rede restrita.
+
+## Observação
+Os workers Python são opcionais no início (ADR-0002): a extração começa atrás de uma interface de extrator no Nest e o robô Python entra quando o OCR de imagens for necessidade medida. A fila e o contrato de mensagens valem desde que o primeiro robô assíncrono exista.
 
 ## Consequências
 Experiência assíncrona (status de processamento). Observabilidade de filas necessária.

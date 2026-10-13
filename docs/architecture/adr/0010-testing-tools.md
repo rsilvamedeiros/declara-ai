@@ -1,6 +1,6 @@
 # ADR-0010: Ferramentas de teste
 
-- Status: proposta (Cypress por decisão do produto; demais, escolha da engenharia)
+- Status: aceita (Cypress por decisão do produto; demais, aprovadas em bloco em 2026-10-13)
 - Data: 2026-10-10
 
 ## Contexto

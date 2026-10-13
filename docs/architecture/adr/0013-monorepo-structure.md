@@ -1,6 +1,6 @@
 # ADR-0013: Estrutura do repositório (monorepo)
 
-- Status: proposta
+- Status: aceita (aprovada em bloco pelo dono do projeto, 2026-10-13)
 - Data: 2026-10-10
 
 ## Contexto
@@ -11,7 +11,7 @@ Produto grande e em expansão, com frontend Nuxt, backend NestJS, robôs Python 
 2. **Vários repositórios**. Prós: autonomia. Contras: versionamento de contratos e regra fiscal entre repositórios, mais atrito para equipe pequena.
 
 ## Decisão (proposta)
-Opção 1. Gerenciador de pacotes: pnpm workspaces (TODO(pergunta): confirmar). Camadas:
+Opção 1. Gerenciador de pacotes: pnpm workspaces (confirmado). Camadas:
 
 - `apps/*` e `workers/*` são executáveis e dependem de `packages/*`, nunca entre si.
 - `packages/tax-core` não depende de framework nem de I/O; lê regras de `packages/tax-rules`.
