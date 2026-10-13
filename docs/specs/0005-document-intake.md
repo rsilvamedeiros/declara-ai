@@ -1,6 +1,6 @@
 # SPEC-0005: Recepção de documentos (validação de envio e duplicidade)
 
-- Status: rascunho
+- Status: aprovada
 - Requisitos: RF-020, RF-021, RF-024, RNF-006, RNF-012; validação V-007 de `docs/domain/validations-catalog.md`
 - Fase do roadmap: 1 (MVP), quarta fatia
 
@@ -49,7 +49,7 @@ Tipos exportados por `tax-core`. `fileName` é dado do usuário e pode conter in
 - fast-check: o resultado de `validateUpload` nunca depende de `fileName`; `findDuplicate` só devolve documento com mesma pessoa, ano e hash.
 
 ## Riscos e perguntas abertas
-- TODO(pergunta): quais tipos aceitar no MVP? Proposta: PDF, PNG e JPEG (informes e recibos costumam ser PDF ou foto).
-- TODO(pergunta): limite padrão de tamanho? Proposta: 20 MB por arquivo, configurável por `IntakeLimits`.
-- TODO(pergunta): duplicado deve ser só aviso (proposta, conforme V-007) ou bloquear o envio?
+- Decidido: tipos aceitos no MVP são PDF, PNG e JPEG.
+- Decidido: limite padrão de 20 MB por arquivo, configurável por `IntakeLimits`.
+- Decidido: documento duplicado só gera aviso (V-007); não bloqueia o envio.
 - Risco: a assinatura dos primeiros bytes não prova que o arquivo é benigno; a verificação profunda e o isolamento ficam na infraestrutura.
