@@ -1,6 +1,6 @@
 # SPEC-0004: Modelo do catálogo de regras fiscais
 
-- Status: aprovada
+- Status: implementada
 - Requisitos: RF-040, RF-043, RNF-020, RNF-021, RNF-023
 - Fase do roadmap: 1 (MVP), terceira fatia
 
@@ -26,13 +26,13 @@ Toda regra fiscal precisa vir de um catálogo versionado, com vigência e fonte 
 - Regras `draft`, `reviewed` e `superseded` nunca são devolvidas por `ruleFor`; reprocessar um ano antigo usa as versões que eram vigentes para ele (RNF-023).
 
 ## Critérios de aceite
-- [ ] CA-1: `createRule` aceita regra completa e rejeita fonte incompleta, `url` não https, vigência invertida e versão < 1.
-- [ ] CA-2: `createCatalog` rejeita `id` + `version` duplicados e aceita versões diferentes do mesmo `id`.
-- [ ] CA-3: `ruleFor` respeita o limite inferior e superior da vigência (inclusive) e vigência aberta (`toYear` ausente).
-- [ ] CA-4: `ruleFor` nunca devolve regra que não seja `effective` e falha de forma explícita em caso de duas `effective` para o mesmo ano.
-- [ ] CA-5: duas versões do mesmo `id` com vigências diferentes devolvem a versão correta para cada ano.
-- [ ] CA-6: `refOf` devolve `{ id, version }` e a regra original não é alterada por nenhuma operação (imutável).
-- [ ] CA-7: o pacote continua puro, sem dependências de runtime (ADR-0001).
+- [x] CA-1: `createRule` aceita regra completa e rejeita fonte incompleta, `url` não https, vigência invertida e versão < 1.
+- [x] CA-2: `createCatalog` rejeita `id` + `version` duplicados e aceita versões diferentes do mesmo `id`.
+- [x] CA-3: `ruleFor` respeita o limite inferior e superior da vigência (inclusive) e vigência aberta (`toYear` ausente).
+- [x] CA-4: `ruleFor` nunca devolve regra que não seja `effective` e falha de forma explícita em caso de duas `effective` para o mesmo ano.
+- [x] CA-5: duas versões do mesmo `id` com vigências diferentes devolvem a versão correta para cada ano.
+- [x] CA-6: `refOf` devolve `{ id, version }` e a regra original não é alterada por nenhuma operação (imutável).
+- [x] CA-7: o pacote continua puro, sem dependências de runtime (ADR-0001).
 
 ## Regras fiscais envolvidas
 Nenhuma. O modelo não contém valores. Os testes usam regras **fictícias** com ids claramente de teste (ex.: `teste.regra`), nunca valores que se pareçam com os reais.
