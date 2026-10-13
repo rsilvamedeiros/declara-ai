@@ -1,6 +1,6 @@
 # SPEC-0004: Modelo do catálogo de regras fiscais
 
-- Status: rascunho
+- Status: aprovada
 - Requisitos: RF-040, RF-043, RNF-020, RNF-021, RNF-023
 - Fase do roadmap: 1 (MVP), terceira fatia
 
@@ -48,6 +48,6 @@ Sem dados pessoais. Mensagens de erro citam apenas `id` e versão da regra.
 - fast-check: propriedade de que `ruleFor` só devolve regra `effective` cuja vigência cobre o ano pedido.
 
 ## Riscos e perguntas abertas
-- TODO(pergunta): `value` deve ser tipado por `kind` já nesta fatia (ex.: `table` com faixas) ou opaco até a primeira família de regras? Proposta: opaco; tipar quando a primeira família (tabela progressiva) tiver spec.
-- TODO(pergunta): o catálogo deve viver em código (arquivos TypeScript versionados no git) ou em dados (JSON)? Proposta: arquivos de dados em JSON validados por `createRule` no teste, revisados por PR, para que cada mudança tenha diff e fonte.
+- Decidido: `value` fica opaco até a primeira família de regras; tipar quando a tabela progressiva tiver spec.
+- Decidido: o catálogo vive em arquivos JSON de dados, validados por `createRule` nos testes e revisados por PR, para que cada mudança tenha diff e fonte.
 - TODO(fonte): ao entrar a primeira família de regras, a SPEC correspondente cita a norma da Receita Federal e só é aprovada com a fonte.
