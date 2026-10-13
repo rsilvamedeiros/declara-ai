@@ -59,3 +59,63 @@ def format_br(value: Decimal) -> str:
 @given(st.decimals(min_value=Decimal(-1000000000), max_value=Decimal(1000000000), places=2))
 def test_roundtrip_property(value):
     assert normalize_amount_br(format_br(value)) == value
+
+
+def test_normalize_digits_ignores_whitespace_and_symbols():
+    assert normalize_digits(" 529 982\n247-25\t") == "52998224725"
+    assert normalize_digits("") == ""
+    assert normalize_digits("../-") == ""
+
+
+@given(st.text(alphabet=st.characters(min_codepoint=32, max_codepoint=126)))
+def test_normalize_digits_property_ascii_only_and_idempotent(text):
+    result = normalize_digits(text)
+    assert all(ch in "0123456789" for ch in result)
+    assert normalize_digits(result) == result
+
+
+@pytest.mark.xfail(
+    strict=True,
+    reason="gap: str.isdigit() aceita dígitos não ASCII (ex.: '²', '١٢٣'); decidir em spec",
+)
+@pytest.mark.parametrize("text", ["²", "١٢٣"])
+def test_normalize_digits_rejects_non_ascii_digits(text):
+    assert normalize_digits(text) == ""
+
+
+@pytest.mark.parametrize(
+    "text,expected",
+    [
+        ("0,00", Decimal("0.00")),
+        ("-0,00", Decimal("0.00")),
+        ("00,50", Decimal("0.50")),
+        ("1.234.567,89", Decimal("1234567.89")),
+        ("R$ -1.234,56", Decimal("-1234.56")),
+        ("999.999.999,99", Decimal("999999999.99")),
+    ],
+)
+def test_normalize_amount_br_edge_values(text, expected):
+    assert normalize_amount_br(text) == expected
+
+
+@pytest.mark.parametrize("text", ["1.23,45", "1.234,567", ",50", "1234,567", "12.34"])
+def test_normalize_amount_br_ambiguous_formats(text):
+    with pytest.raises(AmbiguousAmountError):
+        normalize_amount_br(text)
+
+
+@pytest.mark.parametrize("text", ["--1,00", "12-3,00", "1,00 reais", "R$ R$", "1;00", "\n"])
+def test_normalize_amount_br_invalid_characters(text):
+    with pytest.raises(InvalidAmountError):
+        normalize_amount_br(text)
+
+
+def test_amount_errors_are_distinct_value_errors():
+    assert issubclass(InvalidAmountError, ValueError)
+    assert issubclass(AmbiguousAmountError, ValueError)
+    assert not issubclass(InvalidAmountError, AmbiguousAmountError)
+    assert not issubclass(AmbiguousAmountError, InvalidAmountError)
+
+
+def test_normalize_amount_br_keeps_two_decimal_places():
+    assert str(normalize_amount_br("10,00")) == "10.00"

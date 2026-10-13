@@ -31,6 +31,44 @@ describe('Money', () => {
     },
   )
 
+  it('normaliza zero negativo para 0.00', () => {
+    expect(Money.fromString('-0').toString()).toBe('0.00')
+    expect(Money.fromString('-0.00').toString()).toBe('0.00')
+    expect(Money.fromString('-0.00').equals(Money.fromString('0'))).toBe(true)
+  })
+
+  it('preserva valores abaixo de um real, positivos e negativos', () => {
+    expect(Money.fromString('0.05').toString()).toBe('0.05')
+    expect(Money.fromString('-0.05').toString()).toBe('-0.05')
+  })
+
+  it('suporta valores acima do limite seguro de inteiros do JS', () => {
+    const big = Money.fromString('90071992547409.93')
+    expect(big.add(Money.fromString('0.01')).toString()).toBe('90071992547409.94')
+  })
+
+  it('compara valores negativos', () => {
+    expect(Money.fromString('-2.00').compare(Money.fromString('-1.00'))).toBeLessThan(0)
+    expect(Money.fromString('-1.00').compare(Money.fromString('1.00'))).toBeLessThan(0)
+  })
+
+  it('equals é falso para valores diferentes', () => {
+    expect(Money.fromString('1.00').equals(Money.fromString('1.01'))).toBe(false)
+  })
+
+  it('é imutável: operações não alteram os operandos', () => {
+    const a = Money.fromString('1.00')
+    const b = Money.fromString('2.00')
+    a.add(b)
+    a.subtract(b)
+    expect(a.toString()).toBe('1.00')
+    expect(b.toString()).toBe('2.00')
+  })
+
+  it.each(['.5', '1.', ' 1.00', '1.00 ', '+1.00', '1_000'])('rejeita formato %j', (input) => {
+    expect(() => Money.fromString(input)).toThrow(/Invalid money format/)
+  })
+
   it('propriedade: (a + b) - b é igual a a', () => {
     const cents = fc.integer({ min: -1_000_000_000, max: 1_000_000_000 })
     const toMoney = (c: number) => Money.fromString((c / 100).toFixed(2))
