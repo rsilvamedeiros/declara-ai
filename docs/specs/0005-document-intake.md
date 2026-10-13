@@ -1,6 +1,6 @@
 # SPEC-0005: Recepção de documentos (validação de envio e duplicidade)
 
-- Status: aprovada
+- Status: implementada
 - Requisitos: RF-020, RF-021, RF-024, RNF-006, RNF-012; validação V-007 de `docs/domain/validations-catalog.md`
 - Fase do roadmap: 1 (MVP), quarta fatia
 
@@ -26,12 +26,12 @@ Antes de qualquer extração, todo arquivo enviado precisa ser tratado como não
 - `findDuplicate(existing, personId, year, contentHash)`: devolve o documento existente ou `undefined`. O mesmo conteúdo em outra pessoa ou outro ano **não** é duplicado.
 
 ## Critérios de aceite
-- [ ] CA-1: arquivo vazio, acima do limite, de tipo não aceito ou com hash que não seja SHA-256 hexadecimal é rejeitado com o `reason` correspondente.
-- [ ] CA-2: o tipo é decidido pela assinatura; MIME declarado diferente da assinatura é `mime_mismatch`, e a extensão do nome é ignorada.
-- [ ] CA-3: `registerDocument` devolve `SourceDocument` com pessoa, ano e hash, e não altera a lista `existing`.
-- [ ] CA-4: mesmo hash, mesma pessoa e mesmo ano devolve `duplicateOf`; mesmo hash em outra pessoa ou outro ano não.
-- [ ] CA-5: mensagens de erro e resultados não incluem nome do arquivo nem bytes do conteúdo (RNF-012).
-- [ ] CA-6: o pacote continua puro, sem dependência de runtime nem de `node:crypto` (ADR-0001).
+- [x] CA-1: arquivo vazio, acima do limite, de tipo não aceito ou com hash que não seja SHA-256 hexadecimal é rejeitado com o `reason` correspondente.
+- [x] CA-2: o tipo é decidido pela assinatura; MIME declarado diferente da assinatura é `mime_mismatch`, e a extensão do nome é ignorada.
+- [x] CA-3: `registerDocument` devolve `SourceDocument` com pessoa, ano e hash, e não altera a lista `existing`.
+- [x] CA-4: mesmo hash, mesma pessoa e mesmo ano devolve `duplicateOf`; mesmo hash em outra pessoa ou outro ano não.
+- [x] CA-5: mensagens de erro e resultados não incluem nome do arquivo nem bytes do conteúdo (RNF-012).
+- [x] CA-6: o pacote continua puro, sem dependência de runtime nem de `node:crypto` (ADR-0001).
 
 ## Regras fiscais envolvidas
 Nenhuma.

@@ -22,3 +22,11 @@ export type {
   Person,
   SourceDocument,
 } from './fields'
+export { DEFAULT_LIMITS, findDuplicate, registerDocument, validateUpload } from './intake'
+export type {
+  IntakeLimits,
+  Registration,
+  UploadCandidate,
+  UploadRejection,
+  UploadValidation,
+} from './intake'
